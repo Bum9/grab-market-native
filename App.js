@@ -1,81 +1,40 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Image } from "react-native";
-import BasketballImage from "./assets/products/basketball1.jpeg";
-import Avartor from "./assets/icons/avatar.png";
-import reactDom from "react-dom";
+import { StyleSheet, SafeAreaView } from "react-native";
+import MainScreen from "./screens/main";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import ProductScreen from "./screens/product";
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>판매되는 상품들</Text>
-      <View style={styles.productCard}>
-        <View>
-          <Image
-            style={styles.productImage}
-            source={BasketballImage}
-            resizeMode={"contain"}
+    <SafeAreaView style={styles.SafeAreaView}>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Main">
+          <Stack.Screen
+            name="main"
+            component={MainScreen}
+            options={{
+              title: "홈 화면",
+            }}
           />
-        </View>
-        <View style={styles.productContents}>
-          <Text style={styles.productName}>농구공</Text>
-          <Text style={styles.productPrice}>50000</Text>
-        </View>
-        <View style={styles.productFooter}>
-          <View style={styles.productSeller}>
-            <Image style={styles.productAvator} source={Avartor} />
-            <Text style={styles.productSellerName}>그랩</Text>
-          </View>
-          <Text style={styles.productDate}>3분 전</Text>
-        </View>
-      </View>
-    </View>
+          <Stack.Screen
+            name="Product"
+            component={ProductScreen}
+            options={{
+              title: "상품 화면",
+            }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  SafeAreaView: {
     flex: 1,
     backgroundColor: "#ffff",
-    paddingTop: 32,
   },
-  productCard: {
-    width: 320,
-    borderColor: "rgb(230,230,230)",
-    borderWidth: 1,
-    borderRadius: 16,
-    backgroundColor: "white",
-  },
-  productImage: {
-    width: "100%",
-    height: 210,
-  },
-  productContents: {
-    padding: 10,
-  },
-  productSeller: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  productAvator: {
-    width: 20,
-    height: 20,
-  },
-  productFooter: {
-    justifyContent: "space-between",
-    alignItems: "center",
-    flexDirection: "row",
-    marginTop: 12,
-  },
-  productName: {
-    fontSize: 17,
-  },
-  productPrice: {
-    fontSize: 16,
-    fontWeight: "600",
-    marginTop: 17,
-  },
-  productSellerName: {
-    fontSize: 17,
-  },
-  productDate: { fontSize: 17 },
 });
